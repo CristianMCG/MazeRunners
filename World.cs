@@ -13,6 +13,9 @@ public partial class World : Node2D
 	int cntmoves = 100;
 	int turno = 3;
 
+	Gold[] coins = new Gold[31];
+	int cntC1 = 0, cntC2 = 0;
+
 	bool selected = false;
 	Label[] seleccionar = new Label[2];
 	Flecha[] flechas = new Flecha[2];
@@ -155,6 +158,40 @@ public partial class World : Node2D
 		rapid = (Rapido)(instRapido.Instantiate());
 		AddChild(rapid);
 
+		var instGold = GD.Load<PackedScene>("res://gold.tscn");
+		for(int i = 0; i < 31; i++)  {
+			coins[i] = (Gold)(instGold.Instantiate());
+			AddChild(coins[i]);
+		}
+
+		for(int i = 0; i < 31; i++)  {
+			int x = random.Next(60) % 45 + 3;
+			int y = random.Next(60) % 45 + 3;
+			if(matrixFinal[x - 1,y - 1] == 1)  {
+				x--; y--;
+			}
+			else if(matrixFinal[x, y - 1] == 1)  
+			  	y--;
+			else if(matrixFinal[x + 1, y - 1] == 1)  {
+				x++; y--;
+			}
+			else if(matrixFinal[x - 1,y] == 1)
+				x--;
+			else if(matrixFinal[x,y] == 1)
+			  x += 0;
+			else if(matrixFinal[x + 1,y] == 1)
+			  x++;
+			else if(matrixFinal[x - 1, y + 1] == 1)  {
+				x--; y++;
+			}
+			else if(matrixFinal[x,y + 1] == 1)
+				y++;
+			else  {
+				x++; y++;
+			}
+			matrixFinal[x,y] = 2;
+		}
+
 	}
 
 	public override void _Process(double delta)
@@ -167,10 +204,15 @@ public partial class World : Node2D
 		}
 		
 		int cnt_muros = 0;
-		for(int i = 0; i < 51; i++)  
-			for(int j = 0; j < 51; j++)  
+		int cnt_coins = 0;
+		for(int i = 0; i < 51; i++)   { 
+			for(int j = 0; j < 51; j++)  {  
 				if(matrixFinal[i,j] == 0)  
 				  muros[cnt_muros++].Position = new Vector2(307 + i * 14,4 + j * 14);
+				if(matrixFinal[i,j] == 2)
+				  coins[cnt_coins++].Position = new Vector2(307 + i * 14, 4 + j * 14);
+			}
+		}
 		for( ;cnt_muros < 3025; cnt_muros++)  
 			muros[cnt_muros].Position = new Vector2(-50,-50);
 		
@@ -280,7 +322,7 @@ public partial class World : Node2D
 					if(flePosY2 == 0 && !selected_minero)   {
 						personajes[1] = "minero";
 						selected_minero = true;
-						mineroMX = 49; mineroMY = 1;
+						mineroMX = 1; mineroMY = 49;
 						mineroX = 320; mineroY = 690;
 						minero.Position = new Vector2(320, 690);
 						selected2++;
@@ -288,7 +330,7 @@ public partial class World : Node2D
 					else if(flePosY2 == 1 && !selected_tele)  {
 						personajes[1] = "teleporter";
 						selected_tele = true;
-						teleMX = 49; teleMY = 1;
+						teleMX = 1; teleMY = 49;
 						teleX = 320; teleY = 690;
 						teletrans.Position = new Vector2(320, 690);
 						selected2++;
@@ -296,7 +338,7 @@ public partial class World : Node2D
 					else if(flePosY2 == 2 && !selected_tramp)  {
 						personajes[1] = "trampero";
 						selected_tramp = true;
-						tramperMX = 49; tramperMY = 1;
+						tramperMX = 1; tramperMY = 49;
 						tramperX = 320; tramperY = 690;
 						tramper.Position = new Vector2(320, 690);
 						selected2++;
@@ -304,7 +346,7 @@ public partial class World : Node2D
 					else if(flePosY2 == 3 && !selected_copion)  {
 						personajes[1] = "copion";
 						selected_copion = true;
-						imitadorMX = 49; imitadorMY = 1;
+						imitadorMX = 1; imitadorMY = 49;
 						imitadorX = 320; imitadorY = 690;
 						imitador.Position = new Vector2(320, 690);
 						selected2++;
@@ -312,7 +354,7 @@ public partial class World : Node2D
 					else if(flePosY2 == 4 && !selected_rapido)  {
 						personajes[1] = "rapido";
 						selected_rapido = true;
-						rapidMX = 49; rapidMY = 1;
+						rapidMX = 1; rapidMY = 49;
 						rapidX = 320; rapidY = 690;
 						rapid.Position = new Vector2(320, 690);
 						selected2++;
@@ -354,7 +396,7 @@ public partial class World : Node2D
 					if(flePosY1 == 0 && !selected_minero)  {
 						personajes[2] = "minero";
 						selected_minero = true;
-						mineroMX = 1; mineroMY = 49;
+						mineroMX = 49; mineroMY = 1;
 						mineroX = 992; mineroY = 18;
 						minero.Position = new Vector2(992,18);
 						selected1++;
@@ -362,7 +404,7 @@ public partial class World : Node2D
 					else if(flePosY1 == 1 && !selected_tele)  {
 						personajes[2] = "teleporter";
 						selected_tele = true;
-						teleMX = 1; teleMY = 49;
+						teleMX = 49; teleMY = 1;
 						teleX = 992; teleY = 18;
 						teletrans.Position = new Vector2(992,18);
 						selected1++;
@@ -370,7 +412,7 @@ public partial class World : Node2D
 					else if(flePosY1 == 2 && !selected_tramp)  {
 						personajes[2] = "trampero";
 						selected_tramp = true;
-						tramperMX = 1; tramperMY = 49;
+						tramperMX = 49; tramperMY = 1;
 						tramperX = 992; tramperY = 18;
 						tramper.Position = new Vector2(992,18);
 						selected1++;
@@ -378,7 +420,7 @@ public partial class World : Node2D
 					else if(flePosY1 == 3 && !selected_copion)  {
 						personajes[2] = "copion";
 						selected_copion = true;
-						imitadorMX = 1; imitadorMY = 49;
+						imitadorMX = 49; imitadorMY = 1;
 						imitadorX = 992; imitadorY = 18;
 						imitador.Position = new Vector2(992,18);
 						selected1++;
@@ -386,7 +428,7 @@ public partial class World : Node2D
 					else if(flePosY1 == 4 && !selected_rapido)  {
 						personajes[2] = "rapido";
 						selected_rapido = true;
-						rapidMX = 1; rapidMY = 49;
+						rapidMX = 49; rapidMY = 1;
 						rapidX = 992; rapidY = 18;
 						rapid.Position = new Vector2(992,18);
 						selected1++;
@@ -397,7 +439,7 @@ public partial class World : Node2D
 						personajes[0] = "minero";
 						selected_minero = true;
 						mineroX = 320; mineroY = 18;
-						mineroMX = 1; mineroY = 1;
+						mineroMX = 1; mineroMY = 1;
 						minero.Position = new Vector2(320,18);
 						selected1++;
 					}
@@ -445,34 +487,39 @@ public partial class World : Node2D
 				selected = true;
 			}
 		}
+
 		if(selected && !minerof && !teletransf && !tramperf && !imitadorf && !rapidf)  
 			cntmoves = 0;
 
 		if(Input.IsActionPressed("Abajo") && minerof)  {
-			if(matrixFinal[mineroMX,mineroMY + 1] == 1)  {
+			if(matrixFinal[mineroMX,mineroMY + 1] != 0)  {
 				mineroY += 14;
 				mineroMY++;
+				cntmoves--;
 			}
 		}
 		if(Input.IsActionPressed("Arriba") && minerof)  {
-			if(matrixFinal[mineroMX,mineroMY - 1] == 1)  {
+			if(matrixFinal[mineroMX,mineroMY - 1] != 0)  {
 				mineroY -= 14;
 				mineroMY--;
+				cntmoves--;
 			}
 		}
 		if(Input.IsActionPressed("Derecha") && minerof)  {
-			if(matrixFinal[mineroMX + 1,mineroMY] == 1)  {
+			if(matrixFinal[mineroMX + 1,mineroMY] != 0)  {
 				mineroX += 14;
 				mineroMX++;
+				cntmoves--;
 			}
 		}
 		if(Input.IsActionPressed("Izquierda") && minerof)    {
-			if(matrixFinal[mineroMX - 1,mineroMY] == 1)  {
+			if(matrixFinal[mineroMX - 1,mineroMY] != 0)  {
 				mineroX -= 14;
 				mineroMX--;
+				cntmoves--;
 			}
 		}
-		if(minerof)
+		if(minerof)  
 			minero.Position = new Vector2(mineroX,mineroY);
 		if(Input.IsActionPressed("Habilidad") && minerof)    {
 			if(matrixFinal[mineroMX,mineroMY - 1] == 0 && mineroMY - 1 > 0)
@@ -484,29 +531,45 @@ public partial class World : Node2D
 			if(matrixFinal[mineroMX + 1,mineroMY] == 0 && mineroMX + 1 < 50)
 			  matrixFinal[mineroMX + 1,mineroMY] = 1;
 		}
+		if(minerof && matrixFinal[mineroMX,mineroMY] == 2)  {
+			matrixFinal[mineroMX,mineroMY] = 1;
+			for(int i = 0; i < 31; i++)  {
+				if((coins[i].Position.X - 307) / 14 == mineroMX && (coins[i].Position.Y - 4) / 14 == mineroMY)  {
+					if(personajes[0] == "minero" || personajes[2] == "minero")
+						cntC1++;
+					else
+						cntC2++;
+					coins[i].Position = new Vector2(-60,-60);
+				}
+			}
+		}
 
 		if(Input.IsActionPressed("Abajo") && teletransf)  {
-			if(matrixFinal[teleMX,teleMY + 1] == 1)  {
+			if(matrixFinal[teleMX,teleMY + 1] != 0)  {
 				teleY += 14;
 				teleMY++;
+				cntmoves--;
 			}
 		}
 		if(Input.IsActionPressed("Arriba") && teletransf)  {
-			if(matrixFinal[teleMX,teleMY - 1] == 1)  {
+			if(matrixFinal[teleMX,teleMY - 1] != 0)  {
 				teleY -= 14;
 				teleMY--;
+				cntmoves--;
 			}
 		}
 		if(Input.IsActionPressed("Derecha") && teletransf)  {
-			if(matrixFinal[teleMX + 1,teleMY] == 1)  {
+			if(matrixFinal[teleMX + 1,teleMY] != 0)  {
 				teleX += 14;
 				teleMX++;
+				cntmoves--;
 			}
 		}
 		if(Input.IsActionPressed("Izquierda") && teletransf)    {
-			if(matrixFinal[teleMX - 1,teleMY] == 1)  {
+			if(matrixFinal[teleMX - 1,teleMY] != 0)  {
 				teleX -= 14;
 				teleMX--;
+				cntmoves--;
 			}
 		}
 		if(teletransf)  
@@ -551,31 +614,47 @@ public partial class World : Node2D
 			  teleX = 306 + teleMX * 14; teleY = 4 + teleMY * 14;
 			}
 			if(teletransf)				
-				teletrans.Position = new Vector2(teleMX,teleMY);
+				teletrans.Position = new Vector2(teleX,teleY);
+		}
+		if(teletransf && matrixFinal[teleMX,teleMY] == 2)  {
+			matrixFinal[teleMX,teleMY] = 1;
+			for(int i = 0; i < 31; i++)  {
+				if((coins[i].Position.X - 307) / 14 == teleMX && (coins[i].Position.Y - 4) / 14 == teleMY)  {
+					if(personajes[0] == "teleporter" || personajes[2] == "teleporter")
+						cntC1++;
+					else
+						cntC2++;
+					coins[i].Position = new Vector2(-60,-60);
+				}
+			}
 		}
 
 		if(Input.IsActionPressed("Abajo") && tramperf)  {
-			if(matrixFinal[tramperMX,tramperMY + 1] == 1)  {
+			if(matrixFinal[tramperMX,tramperMY + 1] != 0)  {
 				tramperY += 14;
 				tramperMY++;
+				cntmoves--;
 			}
 		}
 		if(Input.IsActionPressed("Arriba") && tramperf)  {
-			if(matrixFinal[tramperMX,tramperMY - 1] == 1)  {
+			if(matrixFinal[tramperMX,tramperMY - 1] != 0)  {
 				tramperY -= 14;
-				tramperMY--;				
+				tramperMY--;
+				cntmoves--;				
 			}
 		}
 		if(Input.IsActionPressed("Derecha") && tramperf)  {
-			if(matrixFinal[tramperMX + 1,tramperMY] == 1)  {
+			if(matrixFinal[tramperMX + 1,tramperMY] != 0)  {
 				tramperX += 14;
 				tramperMX++;
+				cntmoves--;
 			}
 		}
 		if(Input.IsActionPressed("Izquierda") && tramperf)    {
-			if(matrixFinal[tramperMX - 1,tramperMY] == 1)  {
+			if(matrixFinal[tramperMX - 1,tramperMY] != 0)  {
 				tramperX -= 14;
 				tramperMX--;
+				cntmoves--;
 			}
 		}
 		if(tramperf)
@@ -583,29 +662,45 @@ public partial class World : Node2D
 		if(Input.IsActionPressed("Habilidad") && tramperf)  {
 
 		}
+		if(tramperf && matrixFinal[tramperMX,tramperMY] == 2)  {
+			matrixFinal[tramperMX,tramperMY] = 1;
+			for(int i = 0; i < 31; i++)  {
+				if((coins[i].Position.X - 307) / 14 == tramperMX && (coins[i].Position.Y - 4) / 14 == tramperMY)  {
+					if(personajes[0] == "trampero" || personajes[2] == "trampero")
+						cntC1++;
+					else
+						cntC2++;
+					coins[i].Position = new Vector2(-60,-60);
+				}
+			}
+		}
 
 		if(Input.IsActionPressed("Abajo") && imitadorf)  {
-			if(matrixFinal[imitadorMX,imitadorMY + 1] == 1)  {
+			if(matrixFinal[imitadorMX,imitadorMY + 1] != 0)  {
 				imitadorY += 14;
 				imitadorMY++;
+				cntmoves--;
 			}
 		}
 		if(Input.IsActionPressed("Arriba") && imitadorf)  {
-			if(matrixFinal[imitadorMX,imitadorMY - 1] == 1)  {
+			if(matrixFinal[imitadorMX,imitadorMY - 1] != 0)  {
 				imitadorY -= 14;
-				imitadorMY--;				
+				imitadorMY--;
+				cntmoves--;				
 			}
 		}
 		if(Input.IsActionPressed("Derecha") && imitadorf)  {
-			if(matrixFinal[imitadorMX + 1,imitadorMY] == 1)  {
+			if(matrixFinal[imitadorMX + 1,imitadorMY] != 0)  {
 				imitadorX += 14;
 				imitadorMX++;
+				cntmoves--;
 			}
 		}
 		if(Input.IsActionPressed("Izquierda") && imitadorf)    {
-			if(matrixFinal[imitadorMX - 1,imitadorMY] == 1)  {
+			if(matrixFinal[imitadorMX - 1,imitadorMY] != 0)  {
 				imitadorX -= 14;
 				imitadorMX--;
+				cntmoves--;
 			}
 		}
 		if(imitadorf)
@@ -613,38 +708,65 @@ public partial class World : Node2D
 		if(Input.IsActionPressed("Habilidad") && imitadorf)  {
 
 		}
+		if(imitadorf && matrixFinal[imitadorMX,imitadorMY] == 2)  {
+			matrixFinal[imitadorMX,imitadorMY] = 1;
+			for(int i = 0; i < 31; i++)  {
+				if((coins[i].Position.X - 307) / 14 == imitadorMX && (coins[i].Position.Y - 4) / 14 == imitadorMY)  {
+					if(personajes[0] == "copion" || personajes[2] == "copion")
+						cntC1++;
+					else
+						cntC2++;
+					coins[i].Position = new Vector2(-60,-60);
+				}
+			}
+		}
 
 		if(Input.IsActionPressed("Abajo") && rapidf)  {
-			if(matrixFinal[rapidMX,rapidMY + 1] == 1)  {
+			if(matrixFinal[rapidMX,rapidMY + 1] != 0)  {
 				rapidY += 14;
 				rapidMY++;
+				cntmoves--;
 			}
 		}
 		if(Input.IsActionPressed("Arriba") && rapidf)  {
-			if(matrixFinal[rapidMX,rapidMY - 1] == 1)  {
+			if(matrixFinal[rapidMX,rapidMY - 1] != 0)  {
 				rapidY -= 14;
-				rapidMY--;				
+				rapidMY--;
+				cntmoves--;				
 			}
 		}
 		if(Input.IsActionPressed("Derecha") && rapidf)  {
-			if(matrixFinal[rapidMX + 1,rapidMY] == 1)  {
+			if(matrixFinal[rapidMX + 1,rapidMY] != 0)  {
 				rapidX += 14;
 				rapidMX++;
+				cntmoves--;
 			}
 		}
 		if(Input.IsActionPressed("Izquierda") && rapidf)    {
-			if(matrixFinal[rapidMX - 1,rapidMY] == 1)  {
+			if(matrixFinal[rapidMX - 1,rapidMY] != 0)  {
 				rapidX -= 14;
 				rapidMX--;
+				cntmoves--;
 			}
 		}
 		if(rapidf)
 		  rapid.Position = new Vector2(rapidX,rapidY);
-		if(Input.IsActionPressed("Habilidad") && rapidf)  {
-
+		if(Input.IsActionPressed("Habilidad") && rapidf)  
+			cntmoves *= 2;
+		if(rapidf && matrixFinal[rapidMX,rapidMY] == 2)  {
+			matrixFinal[rapidMX,rapidMY] = 1;
+			for(int i = 0; i < 31; i++)  {
+				if((coins[i].Position.X - 307) / 14 == rapidMX && (coins[i].Position.Y - 4) / 14 == rapidMY)  {
+					if(personajes[0] == "rapido" || personajes[2] == "rapido")
+						cntC1++;
+					else
+						cntC2++;
+					coins[i].Position = new Vector2(-60,-60);
+				}
+			}
 		}
 
-		if(cntmoves == 0)   {
+		if(cntmoves <= 0)   {
 			turno = (turno + 1) % 4;
 			minerof = false; teletransf = false; rapidf = false; imitadorf = false; tramperf = false;
 			if(personajes[turno] == "minero")  {
@@ -655,7 +777,18 @@ public partial class World : Node2D
 				cntmoves = 40;
 				teletransf = true;
 			}
-			else if(personajes[turno] == "trampero")  {}
+			else if(personajes[turno] == "trampero")  {
+				cntmoves = 50;
+				tramperf = true;
+			}
+			else if(personajes[turno] == "copion")  {
+				cntmoves = 20;
+				imitadorf = true;
+			}
+			else  {
+				cntmoves = 40;
+				rapidf = true;
+			}
 		}
 
 		Thread.Sleep(40);
