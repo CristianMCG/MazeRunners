@@ -3,9 +3,7 @@ using System;
 
 public partial class Copion : AnimatedSprite2D
 {
-	// Called when the node enters the scene tree for the first time.
-	int eg = 123;
-	
+	// Called when the node enters the scene tree for the first time.	
 	public override void _Ready()
 	{
 	}
