@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://c5xkkevs85dfj"]
+
+[ext_resource type="Script" path="res://TrampaTele.cs" id="1_6j7vd"]
+[ext_resource type="Texture2D" uid="uid://uxpt4rhhl6ej" path="res://Crate01a_Break_2.png" id="1_chblm"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3mhi8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_chblm")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="TrampaTele" type="AnimatedSprite2D"]
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_3mhi8")
+script = ExtResource("1_6j7vd")

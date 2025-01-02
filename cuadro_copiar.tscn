@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://ch3kiyye7nvk6"]
+
+[ext_resource type="Script" path="res://CuadroCopiar.cs" id="1_6lcve"]
+
+[node name="CuadroCopiar" type="Label"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Cual habilidad quieres usar?
+      1) Romper Paredes
+      2)Teletransporte
+      3)Generar Trampa
+      4)Duplicar Movimientos"
+script = ExtResource("1_6lcve")

@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://ckq80thr3cgwv"]
+
+[ext_resource type="Texture2D" uid="uid://byhwwmly3gwba" path="res://Rock01a.png" id="1_exvef"]
+[ext_resource type="Script" path="res://SkillTramp.cs" id="2_r2ecq"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g1uyt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_exvef")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="SkillTramp" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_g1uyt")
+script = ExtResource("2_r2ecq")
