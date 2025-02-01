@@ -673,6 +673,12 @@ public partial class World : Node2D
 			cntmoves /= 2;
 			mineroD = true;
 		}
+		if(minerof && matrixFinal[mineroMX,mineroMY] == 5)  {
+			if(personajes[0] == "minero" || personajes[2] == "minero")
+				cntC2 = 50;
+			else
+				cntC1 = 50;
+		}
 
 		if(Input.IsActionPressed("Abajo") && teletransf)  {
 			if(matrixFinal[teleMX,teleMY + 1] != 0)  {
@@ -802,6 +808,12 @@ public partial class World : Node2D
 			cntmoves /= 2;
 			teleD = true;
 		}
+		if(teletransf && matrixFinal[teleMX,teleMY] == 5)  {
+			if(personajes[0] == "teleporter" || personajes[2] == "teleporter")
+				cntC2 = 50;
+			else
+				cntC1 = 50;
+		}
 
 		if(Input.IsActionPressed("Abajo") && tramperf)  {
 			if(matrixFinal[tramperMX,tramperMY + 1] != 0)  {
@@ -891,6 +903,12 @@ public partial class World : Node2D
 		if(tramperf && matrixFinal[tramperMX,tramperMY] == 4 && !tramperD)  {
 			cntmoves /= 2;
 			tramperD = true;
+		}
+		if(tramperf && matrixFinal[tramperMX,tramperMY] == 5)  {
+			if(personajes[0] == "trampero" || personajes[2] == "trampero")
+				cntC2 = 50;
+			else
+				cntC1 = 50;
 		}
 		
 
@@ -1053,6 +1071,12 @@ public partial class World : Node2D
 			cntmoves /= 2;
 			imitadorD = true;
 		}
+		if(imitadorf && matrixFinal[imitadorMX,imitadorMY] == 5)  {
+			if(personajes[0] == "copion" || personajes[2] == "copion")
+				cntC2 = 50;
+			else
+				cntC1 = 50;
+		}
 
 		if(Input.IsActionPressed("Abajo") && rapidf)  {
 			if(matrixFinal[rapidMX,rapidMY + 1] != 0)  {
@@ -1143,6 +1167,12 @@ public partial class World : Node2D
 		if(rapidf && matrixFinal[rapidMX,rapidMY] == 4 && !rapidD)  {
 			cntmoves /= 2;
 			rapidD = true;
+		}
+		if(rapidf && matrixFinal[rapidMX,rapidMY] == 5)  {
+			if(personajes[0] == "rapido" || personajes[2] == "rapido")
+				cntC2 = 50;
+			else
+				cntC1 = 50;
 		}
 
 		if(cntmoves <= 0)   {
@@ -1394,7 +1424,7 @@ public partial class World : Node2D
 
 		}
 
-		if(cntC1 + cntC2 == 31)  {
+		if(cntC1 + cntC2 >= 31)  {
 			finish = true;
 			minerof = false; rapidf = false; imitadorf = false; teletransf = false; tramperf = false;
 			if(cntC1 > cntC2)  {

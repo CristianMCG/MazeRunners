@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://byw3o021id1ks"]
+
+[node name="Label" type="Label"]
+offset_right = 40.0
+offset_bottom = 23.0

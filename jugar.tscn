@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cnpcy15ox340y"]
+
+[ext_resource type="Script" path="res://Jugar.cs" id="1_ij5i5"]
+
+[node name="Jugar" type="Label"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Comenzar Juego"
+script = ExtResource("1_ij5i5")

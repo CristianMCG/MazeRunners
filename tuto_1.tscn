@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://dqtipw8m0cqgt"]
+
+[ext_resource type="Script" path="res://Tuto1.cs" id="1_f7n54"]
+
+[node name="Tuto1" type="Label"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "        El objetivo del juego es recolectar las monedas      que estan esparcidas sobre el tablero.
+                                               En total hay 31 monedas      en el laberinto. 
+                                                   Asi que el primero en recoger 16 gana.
+           Cada jugador debe elegir dos fichas cada uno, las cuales tienen diferentes habilidades.
+Se trata de un sistema de juegos por turnos donde cada ficha tiene una cantidad de movimientos.
+                           Al terminarse tus movimientos pasa a ser el turno del contrincante."
+script = ExtResource("1_f7n54")

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://b3a7eauwyrver"]
+
+[ext_resource type="Script" path="res://ComoJugar.cs" id="1_le14a"]
+
+[node name="Como Jugar" type="Label"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Como Jugar"
+script = ExtResource("1_le14a")

@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://c57la6hkvc0ri"]
+
+[node name="PruebaTexto" type="RichTextLabel"]
+offset_right = 40.0
+offset_bottom = 40.0
